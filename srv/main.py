@@ -16,6 +16,7 @@ html = """
 """
 
 now_pid = -1
+everething = World()
 
 @app.get("/")
 async def get():
@@ -25,6 +26,7 @@ async def get():
 async def get_pid():
     global now_pid
     now_pid += 1
+    everething.players.append((0,0))
     return now_pid
 
 @app.websocket("/ws")
@@ -36,7 +38,15 @@ async def websocket_endpoint(websocket: WebSocket):
             await websocket.send_text("Unreal player")
             await websocket.close()
             return
+        x, y = everething.get_spawn_coordinates()
+        await websocket.send_text(str(x))
+        await websocket.send_text(str(y))
+        everething.players[pid] = (x, y)
         while True:
-            pass
+            await websocket.send_bytes(everething.pack_to_bytes())
+            px = int(await websocket.receive_text())
+            py = int(await websocket.receive_text())
+            everething.players[pid] = (px, py)
+            
     except WebSocketDisconnect:
         print("Client disconnected")
