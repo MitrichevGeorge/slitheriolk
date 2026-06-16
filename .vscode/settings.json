@@ -1,0 +1,6 @@
+{
+    "python.analysis.venvFolders": [
+        "."
+    ],
+    "python.pythonPath": ".env/bin/python" 
+}

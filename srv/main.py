@@ -12,7 +12,7 @@ html = """
         <h1> This server is for api only </h1>
     </body>
 </html>
-"""#bdfjvndfivnfdin
+"""
 
 now_pid = -1
 
@@ -35,11 +35,6 @@ async def get_pid():
 async def websocket_endpoint(websocket: WebSocket):
     await websocket.accept()
     try:
-        peer = crypt_ws.Communicator_server(websocket, k_sign_priv)
-        await peer.exchange()
-        await peer.send(b"hello everyone!")
-        print(await peer.recv_str())
-        print(await peer.recv_str())
-        print(await peer.recv_str())
+        pass
     except WebSocketDisconnect:
         print("Client disconnected")
