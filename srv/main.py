@@ -1,5 +1,6 @@
 from fastapi import FastAPI, WebSocket, WebSocketDisconnect
 from fastapi.responses import HTMLResponse
+from ..world import World
 
 app = FastAPI()
 html = """
@@ -16,11 +17,6 @@ html = """
 
 now_pid = -1
 
-class World:
-    def __init__(self):
-        px = []
-        py = []
-
 @app.get("/")
 async def get():
     return HTMLResponse(html)
@@ -35,6 +31,12 @@ async def get_pid():
 async def websocket_endpoint(websocket: WebSocket):
     await websocket.accept()
     try:
-        pass
+        pid = int(await websocket.receive_text())
+        if pid > now_pid:
+            await websocket.send_text("Unreal player")
+            await websocket.close()
+            return
+        while True:
+            pass
     except WebSocketDisconnect:
         print("Client disconnected")
