@@ -6,3 +6,9 @@ To install python dependicies run:
 chmod +x inst.sh
 ./inst.sh
 ```
+
+## Reminder (how to do merge)
+```bash
+git checkout main
+git merge origin/main
+```

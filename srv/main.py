@@ -1,6 +1,7 @@
 from fastapi import FastAPI, WebSocket, WebSocketDisconnect
 from fastapi.responses import HTMLResponse
 from ..world import World
+from time import sleep
 
 app = FastAPI()
 html = """
@@ -47,6 +48,6 @@ async def websocket_endpoint(websocket: WebSocket):
             px = int(await websocket.receive_text())
             py = int(await websocket.receive_text())
             everething.players[pid] = (px, py)
-            
+            sleep(0.017)
     except WebSocketDisconnect:
         print("Client disconnected")
